@@ -1,414 +1,205 @@
-# =========================================================
-# PROFESSIONAL CGPA & GPA CALCULATOR WITH FRONTEND
-# =========================================================
+import streamlit as st
 
-from flask import Flask, render_template_string, request
+# ==========================================
+# PAGE CONFIG
+# ==========================================
 
-app = Flask(__name__)
+st.set_page_config(
+    page_title="CGPA Calculator",
+    page_icon="🎓",
+    layout="wide"
+)
 
-HTML = """
+# ==========================================
+# CUSTOM CSS
+# ==========================================
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Professional CGPA Calculator</title>
+st.markdown("""
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+.main {
+    background-color: #0f172a;
 }
 
-body{
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    min-height:100vh;
-    padding:40px;
-    color:white;
+h1, h2, h3 {
+    color: #38bdf8;
 }
 
-.container{
-    max-width:1200px;
-    margin:auto;
+.stNumberInput input {
+    background-color: #1e293b;
+    color: white;
 }
 
-.header{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.header h1{
-    font-size:50px;
-    color:#38bdf8;
-    margin-bottom:10px;
-}
-
-.header p{
-    color:#cbd5e1;
-    font-size:18px;
-}
-
-.dashboard{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:25px;
-}
-
-.semester-card{
-    background:#1e293b;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
-}
-
-.semester-card h2{
-    color:#38bdf8;
-    margin-bottom:20px;
-}
-
-.input-group{
-    margin-bottom:18px;
-}
-
-label{
-    display:block;
-    margin-bottom:8px;
-    color:#cbd5e1;
-}
-
-input{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:#334155;
-    color:white;
-    font-size:16px;
-}
-
-button{
-    width:100%;
-    margin-top:30px;
-    padding:18px;
-    border:none;
-    border-radius:15px;
-    background:#38bdf8;
-    color:white;
-    font-size:22px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#0ea5e9;
-}
-
-.summary{
-    margin-top:40px;
-    background:#1e293b;
-    padding:35px;
-    border-radius:20px;
-}
-
-.summary h2{
-    text-align:center;
-    margin-bottom:30px;
-    color:#38bdf8;
-}
-
-.summary-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-}
-
-.box{
-    background:#334155;
-    padding:25px;
-    border-radius:18px;
-    text-align:center;
-}
-
-.box h3{
-    color:#cbd5e1;
-    margin-bottom:15px;
-}
-
-.box p{
-    font-size:35px;
-    color:#22c55e;
-    font-weight:bold;
-}
-
-.grade{
-    text-align:center;
-    margin-top:30px;
-}
-
-.grade h1{
-    font-size:70px;
-    color:#facc15;
-}
-
-.status{
-    margin-top:10px;
-    font-size:22px;
-    color:#22c55e;
-}
-
-.footer{
-    text-align:center;
-    margin-top:40px;
-    color:#94a3b8;
-}
-
-table{
-    width:100%;
-    margin-top:35px;
-    border-collapse:collapse;
-    overflow:hidden;
-    border-radius:15px;
-}
-
-th{
-    background:#38bdf8;
-    padding:16px;
-}
-
-td{
-    background:#334155;
-    padding:16px;
-    text-align:center;
-    border-bottom:1px solid rgba(255,255,255,0.1);
+.grade-box {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 </style>
 
-</head>
+""", unsafe_allow_html=True)
 
-<body>
+# ==========================================
+# HEADER
+# ==========================================
 
-<div class="container">
+st.title("🎓 Professional CGPA & GPA Calculator")
 
-    <div class="header">
+st.write("Academic Analytics Dashboard")
 
-        <h1>🎓 CGPA & GPA Calculator</h1>
+st.divider()
 
-        <p>Professional Academic Analytics Dashboard</p>
+# ==========================================
+# GPA INPUTS
+# ==========================================
 
-    </div>
+col1, col2, col3, col4 = st.columns(4)
 
-    <form method="POST">
+with col1:
+    sem1 = st.number_input("Semester 1 GPA", 0.0, 10.0, 8.5)
+    sem2 = st.number_input("Semester 2 GPA", 0.0, 10.0, 8.7)
 
-    <div class="dashboard">
+with col2:
+    sem3 = st.number_input("Semester 3 GPA", 0.0, 10.0, 8.9)
+    sem4 = st.number_input("Semester 4 GPA", 0.0, 10.0, 9.1)
 
-        {% for i in range(1,9) %}
+with col3:
+    sem5 = st.number_input("Semester 5 GPA", 0.0, 10.0, 9.0)
+    sem6 = st.number_input("Semester 6 GPA", 0.0, 10.0, 9.2)
 
-        <div class="semester-card">
+with col4:
+    sem7 = st.number_input("Semester 7 GPA", 0.0, 10.0, 9.3)
+    sem8 = st.number_input("Semester 8 GPA", 0.0, 10.0, 9.4)
 
-            <h2>Semester {{i}}</h2>
+gpas = [
+    sem1, sem2, sem3, sem4,
+    sem5, sem6, sem7, sem8
+]
 
-            <div class="input-group">
+# ==========================================
+# CALCULATE
+# ==========================================
 
-                <label>Enter GPA</label>
+if st.button("Calculate CGPA"):
 
-                <input type="number"
-                step="0.01"
-                name="sem{{i}}"
-                placeholder="Example: 8.5"
-                required>
+    total = sum(gpas)
 
-            </div>
+    cgpa = total / len(gpas)
 
-        </div>
+    percentage = cgpa * 9.5
 
-        {% endfor %}
+    highest = max(gpas)
 
-    </div>
+    # ======================================
+    # GRADE
+    # ======================================
 
-    <button type="submit">
-        Calculate Performance
-    </button>
+    if cgpa >= 9:
+        grade = "O"
+        performance = "Outstanding"
 
-    </form>
+    elif cgpa >= 8:
+        grade = "A+"
+        performance = "Excellent"
 
-    {% if cgpa %}
+    elif cgpa >= 7:
+        grade = "A"
+        performance = "Very Good"
 
-    <div class="summary">
+    elif cgpa >= 6:
+        grade = "B"
+        performance = "Good"
 
-        <h2>📊 Performance Summary</h2>
+    else:
+        grade = "C"
+        performance = "Needs Improvement"
 
-        <div class="summary-grid">
+    # ======================================
+    # METRICS
+    # ======================================
 
-            <div class="box">
+    st.divider()
 
-                <h3>Total GPA</h3>
+    c1, c2, c3, c4 = st.columns(4)
 
-                <p>{{total}}</p>
+    c1.metric("Total GPA", f"{total:.2f}")
 
-            </div>
+    c2.metric("CGPA", f"{cgpa:.2f}")
 
-            <div class="box">
+    c3.metric("Percentage", f"{percentage:.2f}%")
 
-                <h3>CGPA</h3>
+    c4.metric("Highest GPA", highest)
 
-                <p>{{cgpa}}</p>
+    # ======================================
+    # GRADE BOX
+    # ======================================
 
-            </div>
+    st.markdown(f"""
 
-            <div class="box">
+    <div class="grade-box">
 
-                <h3>Percentage</h3>
+    <h1>{grade}</h1>
 
-                <p>{{percentage}}%</p>
-
-            </div>
-
-        </div>
-
-        <div class="grade">
-
-            <h1>{{grade}}</h1>
-
-            <div class="status">
-
-                {{performance}}
-
-            </div>
-
-        </div>
-
-        <table>
-
-            <tr>
-                <th>Semester</th>
-                <th>GPA</th>
-                <th>Status</th>
-            </tr>
-
-            {% for sem in semester_data %}
-
-            <tr>
-
-                <td>{{sem.sem}}</td>
-
-                <td>{{sem.gpa}}</td>
-
-                <td>{{sem.status}}</td>
-
-            </tr>
-
-            {% endfor %}
-
-        </table>
+    <h3>{performance}</h3>
 
     </div>
 
-    {% endif %}
+    """, unsafe_allow_html=True)
 
-    <div class="footer">
+    # ======================================
+    # TABLE
+    # ======================================
 
-        Professional CGPA Calculator • Flask + Python
+    st.subheader("📊 Semester Performance")
 
-    </div>
+    semester_data = {
+        "Semester": [
+            "Semester 1",
+            "Semester 2",
+            "Semester 3",
+            "Semester 4",
+            "Semester 5",
+            "Semester 6",
+            "Semester 7",
+            "Semester 8"
+        ],
+        "GPA": gpas
+    }
 
-</div>
+    st.table(semester_data)
 
-</body>
+    # ======================================
+    # PROGRESS BAR
+    # ======================================
 
-</html>
+    st.subheader("🎯 CGPA Progress")
 
-"""
+    st.progress(min(cgpa / 10, 1.0))
 
-@app.route("/", methods=["GET","POST"])
+    # ======================================
+    # STATUS
+    # ======================================
 
-def home():
+    if cgpa >= 9:
 
-    if request.method == "POST":
+        st.success("Outstanding academic performance!")
 
-        gpas = []
+    elif cgpa >= 8:
 
-        semester_data = []
+        st.info("Excellent performance!")
 
-        for i in range(1,9):
+    elif cgpa >= 7:
 
-            gpa = float(request.form[f"sem{i}"])
+        st.warning("Good performance. Keep improving!")
 
-            gpas.append(gpa)
+    else:
 
-            if gpa >= 9:
-                status = "Outstanding"
+        st.error("Needs improvement!")
 
-            elif gpa >= 8:
-                status = "Excellent"
+st.divider()
 
-            elif gpa >= 7:
-                status = "Very Good"
-
-            elif gpa >= 6:
-                status = "Good"
-
-            else:
-                status = "Average"
-
-            semester_data.append({
-                "sem":f"Semester {i}",
-                "gpa":gpa,
-                "status":status
-            })
-
-        total = round(sum(gpas),2)
-
-        cgpa = round(total / len(gpas),2)
-
-        percentage = round(cgpa * 9.5,2)
-
-        if cgpa >= 9:
-
-            grade = "O"
-            performance = "Outstanding Performance"
-
-        elif cgpa >= 8:
-
-            grade = "A+"
-            performance = "Excellent Performance"
-
-        elif cgpa >= 7:
-
-            grade = "A"
-            performance = "Very Good Performance"
-
-        elif cgpa >= 6:
-
-            grade = "B"
-            performance = "Good Performance"
-
-        else:
-
-            grade = "C"
-            performance = "Needs Improvement"
-
-        return render_template_string(
-
-            HTML,
-
-            total=total,
-            cgpa=cgpa,
-            percentage=percentage,
-            grade=grade,
-            performance=performance,
-            semester_data=semester_data
-
-        )
-
-    return render_template_string(HTML)
-
-if __name__ == "__main__":
-
-    app.run(debug=True)
+st.caption("Professional CGPA Calculator • Streamlit + Python")
