@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Professional CGPA & GPA Calculator</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+    min-height:100vh;
+    padding:40px;
+    color:white;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.header h1{
+    font-size:50px;
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+.header p{
+    color:#cbd5e1;
+    font-size:18px;
+}
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+.semester-card{
+    background:#1e293b;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    transition:0.3s;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.semester-card:hover{
+    transform:translateY(-5px);
+}
+
+.semester-card h2{
+    color:#38bdf8;
+    margin-bottom:20px;
+    font-size:24px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#cbd5e1;
+    font-size:15px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    outline:none;
+    background:#334155;
+    color:white;
+}
+
+input::placeholder{
+    color:#94a3b8;
+}
+
+.summary{
+    margin-top:40px;
+    background:#1e293b;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.summary h2{
+    text-align:center;
+    color:#38bdf8;
+    margin-bottom:30px;
+    font-size:35px;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.box{
+    background:#334155;
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+}
+
+.box h3{
+    color:#cbd5e1;
+    margin-bottom:15px;
+}
+
+.box p{
+    font-size:35px;
+    color:#22c55e;
+    font-weight:bold;
+}
+
+button{
+    width:100%;
+    margin-top:35px;
+    padding:18px;
+    border:none;
+    border-radius:15px;
+    background:#38bdf8;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#0ea5e9;
+}
+
+.grade-section{
+    margin-top:30px;
+    text-align:center;
+}
+
+.grade{
+    font-size:60px;
+    font-weight:bold;
+    margin-top:15px;
+    color:#facc15;
+}
+
+.status{
+    margin-top:10px;
+    font-size:22px;
+    color:#22c55e;
+}
+
+.table-section{
+    margin-top:40px;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#1e293b;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+th{
+    background:#38bdf8;
+    padding:18px;
+    color:white;
+    font-size:18px;
+}
+
+td{
+    padding:16px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+tr:hover{
+    background:#334155;
+}
+
+.footer{
+    margin-top:40px;
+    text-align:center;
+    color:#94a3b8;
+    font-size:15px;
+}
+
+@media(max-width:700px){
+
+    .header h1{
+        font-size:38px;
+    }
+
+    .grade{
+        font-size:45px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>🎓 CGPA & GPA Calculator</h1>
+
+        <p>
+            Professional Academic Performance Dashboard
+        </p>
+
+    </div>
+
+    <div class="dashboard">
+
+        <div class="semester-card">
+            <h2>Semester 1</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem1"
+                placeholder="Example: 8.5">
+            </div>
+        </div>
+
+        <div class="semester-card">
+            <h2>Semester 2</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem2"
+                placeholder="Example: 8.9">
+            </div>
+        </div>
+
+        <div class="semester-card">
+            <h2>Semester 3</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem3"
+                placeholder="Example: 9.1">
+            </div>
+        </div>
+
+        <div class="semester-card">
+            <h2>Semester 4</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem4"
+                placeholder="Example: 8.8">
+            </div>
+        </div>
+
+        <div class="semester-card">
+            <h2>Semester 5</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem5"
+                placeholder="Example: 9.0">
+            </div>
+        </div>
+
+        <div class="semester-card">
+            <h2>Semester 6</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem6"
+                placeholder="Example: 9.2">
+            </div>
+        </div>
+
+        <div class="semester-card">
+            <h2>Semester 7</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem7"
+                placeholder="Example: 9.3">
+            </div>
+        </div>
+
+        <div class="semester-card">
+            <h2>Semester 8</h2>
+
+            <div class="input-group">
+                <label>Enter GPA</label>
+                <input type="number" step="0.01"
+                id="sem8"
+                placeholder="Example: 9.4">
+            </div>
+        </div>
+
+    </div>
+
+    <button onclick="calculateCGPA()">
+        Calculate Academic Performance
+    </button>
+
+    <div class="summary">
+
+        <h2>📊 Performance Summary</h2>
+
+        <div class="summary-grid">
+
+            <div class="box">
+                <h3>Total GPA</h3>
+                <p id="totalGPA">0</p>
+            </div>
+
+            <div class="box">
+                <h3>CGPA</h3>
+                <p id="cgpa">0</p>
+            </div>
+
+            <div class="box">
+                <h3>Percentage</h3>
+                <p id="percentage">0%</p>
+            </div>
+
+        </div>
+
+        <div class="grade-section">
+
+            <h2>Final Grade</h2>
+
+            <div class="grade" id="grade">
+                --
+            </div>
+
+            <div class="status" id="status">
+                Waiting for calculation
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="table-section">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Semester</th>
+                    <th>GPA</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="tableBody">
+
+                <tr>
+                    <td>Semester 1</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="footer">
+
+        Professional CGPA Calculator • Academic Analytics Dashboard
+
+    </div>
+
+</div>
+
+<script>
+
+function calculateCGPA(){
+
+    let gpas = [];
+
+    for(let i=1;i<=8;i++){
+
+        let value =
+        Number(document.getElementById(
+        "sem"+i).value);
+
+        if(value > 0){
+            gpas.push(value);
+        }
+
+    }
+
+    if(gpas.length === 0){
+
+        alert("Please enter GPA values");
+
+        return;
+    }
+
+    let total = 0;
+
+    gpas.forEach(gpa=>{
+        total += gpa;
+    });
+
+    let cgpa =
+    total / gpas.length;
+
+    let percentage =
+    (cgpa * 9.5).toFixed(2);
+
+    let grade = "";
+    let status = "";
+
+    if(cgpa >= 9){
+
+        grade = "O";
+        status = "Outstanding Performance";
+
+    }
+
+    else if(cgpa >= 8){
+
+        grade = "A+";
+        status = "Excellent Performance";
+
+    }
+
+    else if(cgpa >= 7){
+
+        grade = "A";
+        status = "Very Good Performance";
+
+    }
+
+    else if(cgpa >= 6){
+
+        grade = "B";
+        status = "Good Performance";
+
+    }
+
+    else{
+
+        grade = "C";
+        status = "Needs Improvement";
+
+    }
+
+    document.getElementById("totalGPA")
+    .innerHTML = total.toFixed(2);
+
+    document.getElementById("cgpa")
+    .innerHTML = cgpa.toFixed(2);
+
+    document.getElementById("percentage")
+    .innerHTML = percentage + "%";
+
+    document.getElementById("grade")
+    .innerHTML = grade;
+
+    document.getElementById("status")
+    .innerHTML = status;
+
+    let table = "";
+
+    for(let i=0;i<gpas.length;i++){
+
+        let semStatus =
+        gpas[i] >= 8 ? "Excellent"
+        : gpas[i] >= 7 ? "Very Good"
+        : gpas[i] >= 6 ? "Good"
+        : "Average";
+
+        table += `
+
+        <tr>
+
+            <td>
+                Semester ${i+1}
+            </td>
+
+            <td>
+                ${gpas[i]}
+            </td>
+
+            <td>
+                ${semStatus}
+            </td>
+
+        </tr>
+
+        `;
+
+    }
+
+    document.getElementById("tableBody")
+    .innerHTML = table;
+
+}
+
+</script>
+
+</body>
+</html>
